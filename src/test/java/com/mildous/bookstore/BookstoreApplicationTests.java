@@ -1,10 +1,10 @@
-package com.mildous.bookstoreproject;
+package com.mildous.bookstore;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 
 @SpringBootTest
-class BookstoreProjectApplicationTests {
+class BookstoreApplicationTests {
 
 	@Test
 	void contextLoads() {

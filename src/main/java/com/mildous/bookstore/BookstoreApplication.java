@@ -1,13 +1,13 @@
-package com.mildous.bookstoreproject;
+package com.mildous.bookstore;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 @SpringBootApplication
-public class BookstoreProjectApplication {
+public class BookstoreApplication {
 
 	public static void main(String[] args) {
-		SpringApplication.run(BookstoreProjectApplication.class, args);
+		SpringApplication.run(BookstoreApplication.class, args);
 	}
 
 }
