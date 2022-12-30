@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layouts/layout}">
+
+<th:block layout:fragment="script">
+    <script th:inline="javascript" th:src="@{/js/productMng.js}"></script>
+</th:block>
+
+<th:block layout:fragment="css">
+    <style>
+        select {
+            margin-right: 10px;
+        }
+    </style>
+</th:block>
+
+<div layout:fragment="content">
+
+    <form th:action="@{'/admin/products/' + ${products.number}}" role="form" method="get" th:object="${products}">
+        <table class="table">
+            <thead>
+            <tr>
+                <td>도서코드</td>
+                <td>도서명</td>
+                <td>상태</td>
+                <td>등록자</td>
+                <td>등록일</td>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="product, status: ${products.getContent()}">
+                <td th:text="${product.productCode}"></td>
+                <td>
+                    <a th:href="'/admin/product/' + ${product.productCode}" th:text="${product.productName}"></a>
+                </td>
+                <td th:text="${product.productSellStatus == T(com.mildous.bookstore.constant.ProductSellStatus).SELL} ? '판매중' : '품절'"></td>
+                <td th:text="${product.createdBy}"></td>
+                <td th:text="${product.regDate}"></td>
+            </tr>
+            </tbody>
+        </table>
+
+        <div th:with="start=${(products.number/maxPage)*maxPage + 1}, end=(${(products.totalPages == 0) ? 1 : (start + (maxPage - 1) < products.totalPages ? start + (maxPage - 1) : products.totalPages)})">
+            <ul class="pagination justify-content-center">
+                <li class="page-item" th:classappend="${products.first} ? 'disabled'">
+                    <a th:onclick="'javascript:page(' + ${products.number - 1} + ')'" aria-label='previous' class="page-link">
+                        <span aria-hidden="true">Previous</span>
+                    </a>
+                </li>
+            </ul>
+        </div>
+    </form>
+</div>
+</html>
