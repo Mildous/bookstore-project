@@ -1,5 +1,6 @@
 <!DOCTYPE html>
-<html xmlns:th=http://www.thymeleaf.org>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 
 <div th:fragment="header">
     <nav class="navbar navbar-expand-sm bg-dark navbar-dark">
@@ -7,28 +8,38 @@
                 data-target="#navbarTogglerDemo03" aria-controls="navbarTogglerDemo03"
                 aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
-        </button>
+        </button>>
+        <img class="mb-2 mr-2" src="/images/book-icon.png" alt="" width="42px" height="42px" th:onclick="|location.href='@{/}'|">
         <a class="navbar-brand" href="/">Book Store</a>
-
         <div class="collapse navbar-collapse" id="navbarTogglerDemo03">
             <ul class="navbar-nav mr-auto mt-2 mt-lg-0">
-                <li class="nav-item">
+                <li class="nav-item" sec:authorize="hasAnyAuthority('ROLE_ADMIN')">
                     <a class="nav-link" href="/admin/product/new">도서 등록</a>
                 </li>
-                <li class="nav-item">
+                <li class="nav-item" sec:authorize="hasAnyAuthority('ROLE_ADMIN')">
                     <a class="nav-link" href="/admin/products">도서 관리</a>
                 </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="/cart">장바구니</a>
+            </ul>
+            <ul class="navbar-nav mt-2 mr-2 mt-lg-0">
+                <li class="nav-item dropdown" sec:authorize="hasAnyAuthority('ROLE_USER')">
+                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        <span sec:authentication="principal.username"></span>
+                    </a>
+                    <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                        <a class="dropdown-item" href="/cart">장바구니</a>
+                        <a class="dropdown-item" href="/orders">주문내역</a>
+                        <div class="dropdown-divider"></div>
+                        <a class="dropdown-item" href="#">회원정보</a>
+                    </div>
                 </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="/orders">구매이력</a>
-                </li>
-                <li class="nav-item">
+                <li class="nav-item" sec:authorize="isAnonymous()">
                     <a class="nav-link" href="/members/login">로그인</a>
                 </li>
-                <li class="nav-item">
+                <li class="nav-item" sec:authorize="isAuthenticated()">
                     <a class="nav-link" href="/members/logout">로그아웃</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="/members/login">Q&A</a>
                 </li>
             </ul>
             <form class="form-inline my-2 my-lg-0" th:action="@{/}" method="get">

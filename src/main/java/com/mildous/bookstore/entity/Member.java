@@ -13,9 +13,10 @@ import javax.persistence.*;
 @Table(name="member")
 @Getter @Setter
 @ToString
-public class Member {
+public class Member extends BaseEntity {
 
     @Id
+    @Column(name = "member_id")
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
@@ -47,7 +48,7 @@ public class Member {
         member.setExtraAddr(memberDto.getExtraAddr());
         String password = passwordEncoder.encode(memberDto.getPassword());
         member.setPassword(password);
-        member.setRole(Role.USER);
+        member.setRole(Role.ADMIN);
         return member;
     }
 

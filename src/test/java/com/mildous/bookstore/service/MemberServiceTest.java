@@ -16,7 +16,7 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 @SpringBootTest
 @Transactional
 @TestPropertySource(locations = "classpath:application-test.properties")
-class MemberServiceTest {
+public class MemberServiceTest {
 
     @Autowired
     MemberService memberService;
@@ -29,7 +29,10 @@ class MemberServiceTest {
         memberDto.setEmail("test@test.com");
         memberDto.setName("테스트");
         memberDto.setPhone("01012341234");
-        memberDto.setAddress("서울");
+        memberDto.setPostcode("04524");
+        memberDto.setAddress("서울특별시 중구 세종대로 110");
+        memberDto.setDetailAddr("서울특별시청");
+        memberDto.setExtraAddr(" (태평로 1가)");
         memberDto.setPassword("1234");
         return Member.joinNewMember(memberDto, passwordEncoder);
     }
@@ -43,7 +46,10 @@ class MemberServiceTest {
         assertEquals(member.getEmail(), joinedMember.getEmail());
         assertEquals(member.getName(), joinedMember.getName());
         assertEquals(member.getPhone(), joinedMember.getPhone());
+        assertEquals(member.getPostcode(), joinedMember.getPostcode());
         assertEquals(member.getAddress(), joinedMember.getAddress());
+        assertEquals(member.getDetailAddr(), joinedMember.getDetailAddr());
+        assertEquals(member.getExtraAddr(), joinedMember.getExtraAddr());
         assertEquals(member.getPassword(), joinedMember.getPassword());
         assertEquals(member.getRole(), joinedMember.getRole());
     }

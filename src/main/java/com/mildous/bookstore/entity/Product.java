@@ -1,19 +1,20 @@
 package com.mildous.bookstore.entity;
 
 import com.mildous.bookstore.constant.ProductSellStatus;
+import com.mildous.bookstore.dto.ProductDto;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
 
 import javax.persistence.*;
-import java.time.LocalDateTime;
 
 @Entity
 @Table(name="product")
 @Getter @Setter @ToString
-public class Product {
+public class Product extends BaseEntity {
 
     @Id
+    @Column(name = "product_code")
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long productCode;
 
@@ -33,8 +34,12 @@ public class Product {
     @Enumerated(EnumType.STRING)
     private ProductSellStatus productSellStatus;
 
-    private LocalDateTime regDate;
-
-    private LocalDateTime updateDate;
+    public void updateProduct(ProductDto productDto) {
+        this.productName = productDto.getProductName();
+        this.productPrice = productDto.getProductPrice();
+        this.productDetail = productDto.getProductDetail();
+        this.productSellStatus = productDto.getProductSellStatus();
+        this.stockAmount = productDto.getStockAmount();
+    }
 
 }

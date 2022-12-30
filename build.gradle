@@ -37,6 +37,7 @@ dependencies {
 	runtimeOnly 'com.mysql:mysql-connector-j'
 	annotationProcessor 'org.projectlombok:lombok'
 	testImplementation 'org.springframework.boot:spring-boot-starter-test'
+	testImplementation 'org.springframework.security:spring-security-test'
 
 	// querydsl dependencies 추가
 	implementation "com.querydsl:querydsl-jpa:${queryDslVersion}"
@@ -50,6 +51,12 @@ dependencies {
 
 	// devtools
 	developmentOnly("org.springframework.boot:spring-boot-devtools")
+
+	// Thymeleaf extras SpringSecurity5
+	implementation 'org.thymeleaf.extras:thymeleaf-extras-springsecurity5'
+
+	// model mapper
+	implementation 'org.modelmapper:modelmapper:3.1.0'
 }
 
 tasks.named('test') {
