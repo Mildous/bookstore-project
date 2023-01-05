@@ -3,8 +3,61 @@
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
       layout:decorate="~{layouts/layout}">
 
+<th:block layout:fragment="css">
+  <link th:href="@{/css/mainPage.css}" rel="stylesheet">
+</th:block>
+
 <div layout:fragment="content">
-  <h1>main page</h1>
+
+  <div id="carouselControls" class="carousel slide margin" data-ride="carousel">
+    <div class="carousel-inner">
+      <div class="carousel-item active product">
+        <img class="d-block w-100 banner" th:src="@{/img/5.svg}" alt="First slide">
+      </div>
+    </div>
+  </div>
+
+  <input type="hidden" name="query" th:value="${productSearchDto.query}">
+  <div th:if="${not #strings.isEmpty(productSearchDto.query)}" class="center">
+    <p class="h3 font-weight-bold" th:text="${productSearchDto.query} + '검색 결과'"></p>
+  </div>
+
+  <div class="row">
+    <th:block th:each="product, status: ${products.getContent()}">
+      <div class="col-md-4 margin">
+        <div class="card">
+          <a th:href="'/product/' + ${product.productCode}" class="text-dark">
+            <img th:src="${product.imgUrl}" class="card-img-top" th:alt="${product.productName}" height="400">
+            <div class="card-body">
+              <h4 class="card-title">[[${product.productName}]]</h4>
+              <p class="card-text">[[${product.productDetail}]]</p>
+              <h3 class="card-title text-danger">[[${product.productPrice}]]원</h3>
+            </div>
+          </a>
+        </div>
+      </div>
+    </th:block>
+  </div>
+
+  <div th:with="start=${(products.number/maxPage)*maxPage + 1}, end=(${(products.totalPages == 0) ? 1 : (start + (maxPage - 1) < products.totalPages ? start + (maxPage - 1) : products.totalPages)})">
+    <ul class="pagination justify-content-center">
+      <li class="page-item" th:classappend="${products.number eq 0} ? 'disabled' : '' ">
+        <a th:href="@{'/' + '?query=' + ${productSearchDto.query} + '&page=' + ${products.number-1}}" aria-label="Previous" class="page-link">
+          <span aria-hidden="true">Previous</span>
+        </a>
+      </li>
+
+      <li class="page-item" th:each="page: ${#numbers.sequence(start, end)}" th:classappend="${products.number eq page - 1} ? 'active' : ''">
+        <a th:href="@{'/' + '?query=' + ${productSearchDto.query} + '&page=' + ${page - 1}}" th:inline="text" class="page-link">[[${page}]]</a>
+      </li>
+
+      <li class="page-item" th:classappend="${products.number+1 ge products.totalPages} ? 'disabled' : ''">
+        <a th:href="@{'/' + '?query=' + ${productSearchDto.query} + '&page=' + ${products.number + 1}}" aria-label="Next" class="page-link">
+          <span aria-hidden="true">Next</span>
+        </a>
+      </li>
+    </ul>
+  </div>
 </div>
 
 </html>

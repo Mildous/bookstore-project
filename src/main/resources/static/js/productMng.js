@@ -1,18 +1,19 @@
 $(document).ready(function() {
     $("#searchBtn").on("click", function(e) {
         e.preventDefault();
+        page(0);
     });
 });
 
 function page(page) {
-    var searchDateType = $("#searchDateType").val();
-    var searchSellStatus = $("#searchSellStatus").val();
-    var searchBy = $("#searchBy").val();
-    var searchQuery = $("#searchQuery").val();
+    var dateType = $("#date").val();
+    var sellStatus = $("#status").val();
+    var searchBy = $("#by").val();
+    var searchQuery = $("#query").val();
 
     location.href="/admin/products/" + page
-        + "?dType=" + searchDateType
-        + "&status=" + searchSellStatus
+        + "?date=" + dateType
+        + "&status=" + sellStatus
         + "&by=" + searchBy
         + "&query=" + searchQuery;
 }

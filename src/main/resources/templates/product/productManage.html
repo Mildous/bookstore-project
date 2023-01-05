@@ -48,7 +48,36 @@
                         <span aria-hidden="true">Previous</span>
                     </a>
                 </li>
+                <li class="page-item" th:each="page: ${#numbers.sequence(start, end)}" th:classappend="${products.number eq page-1}?'active':''">
+                    <a th:onclick="'javascript:page(' + ${page - 1} + ')'" th:inline="text" class="page-link">[[${page}]]</a>
+                </li>
+                <li class="page-item" th:classappend="${products.last}?'disabled'">
+                    <a th:onclick="'javascript:page(' + ${products.number + 1} + ')'" aria-label="Next" class="page-link">
+                        <span aria-hidden="true">Next</span>
+                    </a>
+                </li>
             </ul>
+        </div>
+
+        <div class="form-inline justify-content-center" th:object="${productSearchDto}">
+            <select th:field="*{date}" class="form-control" style="width:auto;">
+                <option value="all">전체기간</option>
+                <option value="1d">1일</option>
+                <option value="1w">1주</option>
+                <option value="1m">1개월</option>
+                <option value="6m">6개월</option>
+            </select>
+            <select th:field="*{status}" class="form-control" style="width:auto;">
+                <option value="">판매상태</option>
+                <option value="SELL">판매중</option>
+                <option value="SOLD_OUT">품절</option>
+            </select>
+            <select th:field="*{by}" class="form-control" style="width:auto;">
+                <option value="productName">상품명</option>
+                <option value="createdBy">등록자</option>
+            </select>
+            <input th:field="*{query}" type="text" class="form-control" placeholder="검색어를 입력하세요">
+            <button id="searchBtn" type="submit" class="btn btn-success ml-2">검색</button>
         </div>
     </form>
 </div>

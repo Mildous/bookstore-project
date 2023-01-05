@@ -106,4 +106,11 @@ public class ProductController {
         return "product/productManage";
     }
 
+    @GetMapping(value = "/product/{productCode}")
+    public String productDetail(Model model, @PathVariable("productCode") Long productCode) {
+        ProductDto productDto = productService.getProductDetail(productCode);
+        model.addAttribute("product", productDto);
+        return "product/productDtl";
+    }
+
 }

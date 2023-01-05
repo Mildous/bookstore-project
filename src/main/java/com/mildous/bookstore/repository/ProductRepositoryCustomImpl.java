@@ -1,9 +1,13 @@
 package com.mildous.bookstore.repository;
 
 import com.mildous.bookstore.constant.ProductSellStatus;
+import com.mildous.bookstore.dto.MainProductDto;
 import com.mildous.bookstore.dto.ProductSearchDto;
+import com.mildous.bookstore.dto.QMainProductDto;
 import com.mildous.bookstore.entity.Product;
 import com.mildous.bookstore.entity.QProduct;
+import com.mildous.bookstore.entity.QProductImg;
+import com.querydsl.core.QueryResults;
 import com.querydsl.core.types.dsl.BooleanExpression;
 import com.querydsl.core.types.dsl.Wildcard;
 import com.querydsl.jpa.impl.JPAQueryFactory;
@@ -60,7 +64,7 @@ public class ProductRepositoryCustomImpl implements ProductRepositoryCustom {
     public Page<Product> getProductAdminPage(ProductSearchDto productSearchDto, Pageable pageable) {
         List<Product> content = queryFactory
                 .selectFrom(QProduct.product)
-                .where(regDateAfter(productSearchDto.getDType()),
+                .where(regDateAfter(productSearchDto.getDate()),
                         searchSellStatusEq(productSearchDto.getStatus()),
                         searchByLike(productSearchDto.getBy(),
                                 productSearchDto.getQuery()))
@@ -70,7 +74,7 @@ public class ProductRepositoryCustomImpl implements ProductRepositoryCustom {
                 .fetch();
 
         long total = queryFactory.select(Wildcard.count).from(QProduct.product)
-                .where(regDateAfter(productSearchDto.getDType()),
+                .where(regDateAfter(productSearchDto.getDate()),
                         searchSellStatusEq(productSearchDto.getStatus()),
                         searchByLike(productSearchDto.getBy(), productSearchDto.getQuery()))
                 .fetchOne();
@@ -81,4 +85,40 @@ public class ProductRepositoryCustomImpl implements ProductRepositoryCustom {
     private BooleanExpression productNameLike(String searchQuery){
         return StringUtils.isEmpty(searchQuery) ? null : QProduct.product.productName.like("%" + searchQuery + "%");
     }
+
+    @Override
+    public Page<MainProductDto> getMainProductPage(ProductSearchDto productSearchDto, Pageable pageable) {
+        QProduct product = QProduct.product;
+        QProductImg productImg = QProductImg.productImg;
+
+        List<MainProductDto> content = queryFactory
+                .select(
+                        new QMainProductDto(
+                                product.productCode,
+                                product.productName,
+                                product.productDetail,
+                                productImg.imgUrl,
+                                product.productPrice
+                        )
+                )
+                .from(productImg)
+                .join(productImg.product, product)
+                .where(productImg.repImgYn.eq("Y"))
+                .where(productNameLike(productSearchDto.getQuery()))
+                .orderBy(product.productCode.desc())
+                .offset(pageable.getOffset())
+                .limit(pageable.getPageSize())
+                .fetch();
+
+        long total = queryFactory
+                .select(Wildcard.count)
+                .from(productImg)
+                .join(productImg.product, product)
+                .where(productImg.repImgYn.eq("Y"))
+                .where(productNameLike(productSearchDto.getQuery()))
+                .fetchOne();
+
+        return new PageImpl<>(content, pageable, total);
+    }
+
 }

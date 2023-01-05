@@ -1,5 +1,6 @@
 package com.mildous.bookstore.service;
 
+import com.mildous.bookstore.dto.MainProductDto;
 import com.mildous.bookstore.dto.ProductDto;
 import com.mildous.bookstore.dto.ProductImgDto;
 import com.mildous.bookstore.dto.ProductSearchDto;
@@ -80,5 +81,10 @@ public class ProductService {
     @Transactional(readOnly = true)
     public Page<Product> getProductAdminPage(ProductSearchDto productSearchDto, Pageable pageable) {
         return productRepository.getProductAdminPage(productSearchDto, pageable);
+    }
+
+    @Transactional(readOnly = true)
+    public Page<MainProductDto> getMainProductPage(ProductSearchDto productSearchDto, Pageable pageable) {
+        return productRepository.getMainProductPage(productSearchDto, pageable);
     }
 }
