@@ -3,7 +3,7 @@
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
       layout:decorate="~{layouts/layout}">
 <th:block layout:fragment="script">
-  <script th:inline="javascript" th:src="@{/js/productReg.js}"></script>
+  <script th:inline="javascript" th:src="@{/js/productForm.js}"></script>
   <script th:inline="javascript" th:src="@{/js/summernote.js}"></script>
 
   <script th:inline="javascript">
@@ -11,7 +11,7 @@
   </script>
 </th:block>
 <th:block layout:fragment="css">
-  <link th:href="@{/css/productReg.css}" rel="stylesheet">
+  <link th:href="@{/css/productForm.css}" rel="stylesheet">
 </th:block>
 
 <div layout:fragment="content">
@@ -34,6 +34,46 @@
       <div class="col-md-4 mb-auto">
         <div class="input-group">
           <div class="input-group-prepend">
+            <span class="input-group-text">분류</span>
+          </div>
+          <select th:field="*{category}" class="custom-select">
+            <option value="HOUSEHOLD">가정</option>
+            <option value="HEALTH_HOBBY">건강/취미</option>
+            <option value="ECONOMICS_BUSINESS">경제/경영</option>
+            <option value="DICTIONARY">사전</option>
+            <option value="UNIVERSITY_TEXTBOOK">대학교재</option>
+            <option value="COMIC">만화</option>
+            <option value="SOCIAL_POLITICS">사회/정치</option>
+            <option value="NOVEL_POEM">소설/시</option>
+            <option value="CHILD">어린이</option>
+            <option value="ESSAY">에세이</option>
+            <option value="TRAVEL">여행</option>
+            <option value="HISTORY">역사</option>
+            <option value="ART">예술</option>
+            <option value="HUMANITIES">인문</option>
+            <option value="SELF_IMPROVEMENT">자기계발</option>
+            <option value="NATURAL_SCIENCE">자연과학</option>
+            <option value="MAGAZINE">잡지</option>
+            <option value="RELIGION">종교</option>
+            <option value="TEENAGER">청소년</option>
+            <option value="IT_MOBILE">IT/모바일</option>
+          </select>
+        </div>
+      </div>
+    </div>
+
+    <div class="form-row">
+      <div class="col-md-8 mb-auto">
+        <div class="input-group">
+          <div class="input-group-prepend">
+            <span class="input-group-text">부제</span>
+          </div>
+          <input type="text" th:field="*{productSubName}" class="form-control" placeholder="부제">
+        </div>
+      </div>
+      <div class="col-md-4 mb-auto">
+        <div class="input-group">
+          <div class="input-group-prepend">
             <span class="input-group-text">판매상태</span>
           </div>
           <select th:field="*{productSellStatus}" class="custom-select">
@@ -41,6 +81,27 @@
             <option value="SOLD_OUT">품절</option>
           </select>
         </div>
+      </div>
+    </div>
+
+    <div class="form-row">
+      <div class="col-md-6 mb-auto">
+        <div class="input-group">
+          <div class="input-group-prepend">
+            <span class="input-group-text">저자</span>
+          </div>
+          <input type="text" th:field="*{author}" class="form-control" placeholder="저자명">
+        </div>
+        <p th:if="${#fields.hasErrors('author')}" th:errors="*{author}" class="fieldError">Incorrect data</p>
+      </div>
+      <div class="col-md-6 mb-auto">
+        <div class="input-group">
+          <div class="input-group-prepend">
+            <span class="input-group-text">출판사</span>
+          </div>
+          <input type="text" th:field="*{publisher}" class="form-control" placeholder="출판사">
+        </div>
+        <p th:if="${#fields.hasErrors('publisher')}" th:errors="*{publisher}" class="fieldError">Incorrect data</p>
       </div>
     </div>
 

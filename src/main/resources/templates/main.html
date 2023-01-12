@@ -9,12 +9,52 @@
 
 <div layout:fragment="content">
 
-  <div id="carouselControls" class="carousel slide margin" data-ride="carousel">
+  <div id="myCarousel" class="carousel slide margin" data-ride="carousel">
+    <ol class="carousel-indicators">
+      <li data-target="#myCarousel" data-slide-to="0" class="active"></li>
+      <li data-target="#myCarousel" data-slide-to="1"></li>
+      <li data-target="#myCarousel" data-slide-to="2"></li>
+    </ol>
     <div class="carousel-inner">
       <div class="carousel-item active product">
-        <img class="d-block w-100 banner" th:src="@{/img/5.svg}" alt="First slide">
+        <svg class="bd-placeholder-img" width="100%" height="100%" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMidYMid slice" focusable="false" role="img"><rect width="100%" height="100%" fill="#777"/></svg>
+        <div class="container">
+          <div class="carousel-caption text-left">
+            <h1>Example headline.</h1>
+            <p>Cras justo odio, dapibus ac facilisis in, egestas eget quam. Donec id elit non mi porta gravida at eget metus. Nullam id dolor id nibh ultricies vehicula ut id elit.</p>
+            <p><a class="btn btn-lg btn-primary" href="#" role="button">Sign up today</a></p>
+          </div>
+        </div>
+      </div>
+      <div class="carousel-item product">
+        <svg class="bd-placeholder-img" width="100%" height="100%" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMidYMid slice" focusable="false" role="img"><rect width="100%" height="100%" fill="#777"/></svg>
+        <div class="container">
+          <div class="carousel-caption">
+            <h1>Another example headline.</h1>
+            <p>Cras justo odio, dapibus ac facilisis in, egestas eget quam. Donec id elit non mi porta gravida at eget metus. Nullam id dolor id nibh ultricies vehicula ut id elit.</p>
+            <p><a class="btn btn-lg btn-primary" href="#" role="button">Learn more</a></p>
+          </div>
+        </div>
+      </div>
+      <div class="carousel-item product">
+        <svg class="bd-placeholder-img" width="100%" height="100%" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMidYMid slice" focusable="false" role="img"><rect width="100%" height="100%" fill="#777"/></svg>
+        <div class="container">
+          <div class="carousel-caption text-right">
+            <h1>One more for good measure.</h1>
+            <p>Cras justo odio, dapibus ac facilisis in, egestas eget quam. Donec id elit non mi porta gravida at eget metus. Nullam id dolor id nibh ultricies vehicula ut id elit.</p>
+            <p><a class="btn btn-lg btn-primary" href="#" role="button">Browse gallery</a></p>
+          </div>
+        </div>
       </div>
     </div>
+    <a class="carousel-control-prev" href="#myCarousel" role="button" data-slide="prev">
+      <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+      <span class="sr-only">Previous</span>
+    </a>
+    <a class="carousel-control-next" href="#myCarousel" role="button" data-slide="next">
+      <span class="carousel-control-next-icon" aria-hidden="true"></span>
+      <span class="sr-only">Next</span>
+    </a>
   </div>
 
   <input type="hidden" name="query" th:value="${productSearchDto.query}">
@@ -27,11 +67,34 @@
       <div class="col-md-4 margin">
         <div class="card">
           <a th:href="'/product/' + ${product.productCode}" class="text-dark">
+            <span th:switch="${product.category.toString()}" class="badge badge-success ml-3 mt-4 mb-2">
+                <span th:case="HOUSEHOLD">가정</span>
+                <span th:case="HEALTH_HOBBY">건강/취미</span>
+                <span th:case="ECONOMICS_BUSINESS">경제/경영</span>
+                <span th:case="DICTIONARY">사전</span>
+                <span th:case="UNIVERSITY_TEXTBOOK">대학교재</span>
+                <span th:case="COMIC">만화</span>
+                <span th:case="SOCIAL_POLITICS">사회/정치</span>
+                <span th:case="NOVEL_POEM">소설/시</span>
+                <span th:case="CHILD">어린이</span>
+                <span th:case="ESSAY">에세이</span>
+                <span th:case="TRAVEL">여행</span>
+                <span th:case="HISTORY">역사</span>
+                <span th:case="ART">예술</span>
+                <span th:case="HUMANITIES">인문</span>
+                <span th:case="SELF_IMPROVEMENT">자기계발</span>
+                <span th:case="NATURAL_SCIENCE">자연과학</span>
+                <span th:case="MAGAZINE">잡지</span>
+                <span th:case="RELIGION">종교</span>
+                <span th:case="TEENAGER">청소년</span>
+                <span th:case="IT_MOBILE">IT/모바일</span>
+            </span>
             <img th:src="${product.imgUrl}" class="card-img-top" th:alt="${product.productName}" height="400">
             <div class="card-body">
               <h4 class="card-title">[[${product.productName}]]</h4>
-              <p class="card-text">[[${product.productDetail}]]</p>
-              <h3 class="card-title text-danger">[[${product.productPrice}]]원</h3>
+              <h6 class="card-text">[[${product.productSubName}]]</h6>
+              <h6 class="card-text">[[${product.author}]] | [[${product.publisher}]]</h6>
+              <h5 class="card-title text-danger">[[${product.productPrice}]]원</h5>
             </div>
           </a>
         </div>

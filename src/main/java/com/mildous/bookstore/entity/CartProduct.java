@@ -23,6 +23,19 @@ public class CartProduct extends BaseEntity {
     @JoinColumn(name = "product_code")
     private Product product;
 
-    private int cartAmount;
+    private int count;
+
+    public static CartProduct createCartProduct(Cart cart, Product product, int count) {
+        CartProduct cartProduct = new CartProduct();
+        cartProduct.setCart(cart);
+        cartProduct.setProduct(product);
+        cartProduct.setCount(count);
+
+        return cartProduct;
+    }
+
+    public void addCount(int count) {
+        this.count += count;
+    }
 
 }

@@ -1,5 +1,6 @@
 package com.mildous.bookstore.dto;
 
+import com.mildous.bookstore.constant.ProductCategory;
 import com.mildous.bookstore.constant.ProductSellStatus;
 import com.mildous.bookstore.entity.Product;
 import lombok.Getter;
@@ -18,6 +19,16 @@ public class ProductDto {
 
     @NotBlank(message = "도서명을 입력해주세요.")
     private String productName;
+
+    private String productSubName;
+
+    @NotBlank(message = "출판사를 입력해주세요.")
+    private String publisher;
+
+    @NotBlank(message = "저자를 입력해주세요.")
+    private String author;
+
+    private ProductCategory category;
 
     @NotNull(message = "가격을 입력해주세요.")
     private Integer productPrice;

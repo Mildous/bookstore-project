@@ -22,7 +22,7 @@ public class ProductControllerTest {
     MockMvc mockMvc;
 
     @Test
-    @DisplayName("regProduct ADMIN 접근 테스트")
+    @DisplayName("createProduct ADMIN 접근 테스트")
     @WithMockUser(username = "admin", roles = "ADMIN")
     public void regProductTest() throws Exception {
         mockMvc.perform(MockMvcRequestBuilders.get("/admin/product/new"))
@@ -31,7 +31,7 @@ public class ProductControllerTest {
     }
 
     @Test
-    @DisplayName("regProduct USER 접근 테스트")
+    @DisplayName("createProduct USER 접근 테스트")
     @WithMockUser(username = "user", roles = "USER")
     public void regProductUserTest() throws Exception {
         mockMvc.perform(MockMvcRequestBuilders.get("/admin/product/new"))

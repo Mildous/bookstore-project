@@ -1,5 +1,6 @@
 package com.mildous.bookstore.entity;
 
+import com.mildous.bookstore.constant.ProductCategory;
 import com.mildous.bookstore.constant.ProductSellStatus;
 import com.mildous.bookstore.repository.MemberRepository;
 import com.mildous.bookstore.repository.OrderProductRepository;
@@ -34,15 +35,19 @@ public class OrderTest {
     EntityManager em;
 
     public Product newProduct() {
-        Product p = new Product();
-        p.setProductName("상품 테스트");
-        p.setProductPrice(10000);
-        p.setProductDetail("상품설명");
-        p.setProductSellStatus(ProductSellStatus.SELL);
-        p.setStockAmount(100);
-        p.setRegDate(LocalDateTime.now());
-        p.setUpdateDate(LocalDateTime.now());
-        return p;
+        Product product = new Product();
+        product.setProductName("상품 테스트");
+        product.setProductSubName("부제목");
+        product.setAuthor("저자");
+        product.setPublisher("출판사");
+        product.setCategory(ProductCategory.ART);
+        product.setProductPrice(10000);
+        product.setProductDetail("상품설명");
+        product.setProductSellStatus(ProductSellStatus.SELL);
+        product.setStockAmount(100);
+        product.setRegDate(LocalDateTime.now());
+        product.setUpdateDate(LocalDateTime.now());
+        return product;
     }
 
     @Test
@@ -56,7 +61,7 @@ public class OrderTest {
             productRepository.save(p);
             OrderProduct op = new OrderProduct();
             op.setProduct(p);
-            op.setOrderAmount(10);
+            op.setCount(10);
             op.setOrderPrice(1000);
             op.setOrder(order);
             order.getOrderProducts().add(op);
@@ -80,7 +85,7 @@ public class OrderTest {
             productRepository.save(p);
             OrderProduct op = new OrderProduct();
             op.setProduct(p);
-            op.setOrderAmount(10);
+            op.setCount(10);
             op.setOrderPrice(10000);
             op.setOrder(order);
             order.getOrderProducts().add(op);

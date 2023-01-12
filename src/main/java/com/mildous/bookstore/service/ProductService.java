@@ -28,13 +28,13 @@ public class ProductService {
     private final ProductImgRepository productImgRepository;
     private final ProductImgService productImgService;
 
-    public Long regProduct(ProductDto productDto, List<MultipartFile> productFileList) throws Exception {
+    public Long createProduct(ProductDto productDto, List<MultipartFile> productFileList) throws Exception {
 
-        // reg Product
+        // create Product
         Product product = productDto.product();
         productRepository.save(product);
 
-        // reg image-file
+        // create image-file
         for(int i=0; i<productFileList.size(); i++) {
             ProductImg productImg = new ProductImg();
             productImg.setProduct(product);

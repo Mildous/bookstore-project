@@ -96,7 +96,10 @@ public class ProductRepositoryCustomImpl implements ProductRepositoryCustom {
                         new QMainProductDto(
                                 product.productCode,
                                 product.productName,
-                                product.productDetail,
+                                product.productSubName,
+                                product.category,
+                                product.author,
+                                product.publisher,
                                 productImg.imgUrl,
                                 product.productPrice
                         )

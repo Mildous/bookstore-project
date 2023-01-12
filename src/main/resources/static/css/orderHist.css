@@ -1,0 +1,24 @@
+.content-mg {
+    margin: 2% 30% 100px 30%;
+}
+.repImgDiv {
+    margin-right: 15px;
+    margin-left: 15px;
+    height: auto;
+}
+.repImg {
+    height: 100px;
+    width: 100px;
+}
+.card {
+    width: 750px;
+    height: 100%;
+    padding: 30px;
+    margin-bottom: 20px;
+}
+.fs18 {
+    font-size: 18px;
+}
+.fs24 {
+    fint-size: 24px;
+}

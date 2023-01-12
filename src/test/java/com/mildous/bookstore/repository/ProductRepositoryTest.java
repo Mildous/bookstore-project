@@ -1,5 +1,6 @@
 package com.mildous.bookstore.repository;
 
+import com.mildous.bookstore.constant.ProductCategory;
 import com.mildous.bookstore.constant.ProductSellStatus;
 import com.mildous.bookstore.entity.Product;
 import com.mildous.bookstore.entity.QProduct;
@@ -50,6 +51,10 @@ public class ProductRepositoryTest {
         for(int i=1; i<=10; i++) {
             Product product = new Product();
             product.setProductName("test product" + i);
+            product.setProductSubName("부제목");
+            product.setAuthor("저자");
+            product.setPublisher("출판사");
+            product.setCategory(ProductCategory.ART);
             product.setProductPrice(10000 + i);
             product.setProductDetail("test product description" + i);
             product.setProductSellStatus(ProductSellStatus.SELL);

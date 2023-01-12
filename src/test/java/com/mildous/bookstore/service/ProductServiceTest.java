@@ -1,5 +1,6 @@
 package com.mildous.bookstore.service;
 
+import com.mildous.bookstore.constant.ProductCategory;
 import com.mildous.bookstore.constant.ProductSellStatus;
 import com.mildous.bookstore.dto.ProductDto;
 import com.mildous.bookstore.entity.Product;
@@ -36,7 +37,7 @@ public class ProductServiceTest {
     @Autowired
     ProductImgRepository productImgRepository;
 
-    List<MultipartFile> newMultipartFiles() throws Exception {
+    List<MultipartFile> createMultipartFiles() throws Exception {
 
         List<MultipartFile> multipartFiles = new ArrayList<>();
 
@@ -53,16 +54,20 @@ public class ProductServiceTest {
     @Test
     @DisplayName("등록 테스트")
     @WithMockUser(username = "admin", roles = "ADMIN")
-    void regProduct() throws Exception {
+    void createProduct() throws Exception {
         ProductDto dto = new ProductDto();
         dto.setProductName("테스트");
+        dto.setProductSubName("부제목");
+        dto.setAuthor("저자");
+        dto.setPublisher("출판사");
+        dto.setCategory(ProductCategory.ART);
         dto.setProductSellStatus(ProductSellStatus.SELL);
         dto.setProductPrice(10000);
         dto.setStockAmount(100);
         dto.setProductDetail("설명");
 
-        List<MultipartFile> multipartFileList = newMultipartFiles();
-        Long productCode = productService.regProduct(dto, multipartFileList);
+        List<MultipartFile> multipartFileList = createMultipartFiles();
+        Long productCode = productService.createProduct(dto, multipartFileList);
 
         List<ProductImg> productImgList = productImgRepository.findByProductProductCodeOrderByImgIdAsc(productCode);
         Product product = productRepository.findById(productCode).orElseThrow(EntityNotFoundException::new);

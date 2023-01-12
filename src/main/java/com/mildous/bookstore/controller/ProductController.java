@@ -49,7 +49,7 @@ public class ProductController {
         }
 
         try {
-            productService.regProduct(productDto, productImgFileList);
+            productService.createProduct(productDto, productImgFileList);
         } catch(Exception e) {
             model.addAttribute("errorMessage", "등록 중 오류가 발생하였습니다.");
             return "product/productForm";

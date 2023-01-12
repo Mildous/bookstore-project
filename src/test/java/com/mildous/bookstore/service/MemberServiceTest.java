@@ -24,7 +24,7 @@ public class MemberServiceTest {
     @Autowired
     PasswordEncoder passwordEncoder;
 
-    public Member joinNewMember() {
+    public Member createMember() {
         MemberDto memberDto = new MemberDto();
         memberDto.setEmail("test@test.com");
         memberDto.setName("테스트");
@@ -40,7 +40,7 @@ public class MemberServiceTest {
     @Test
     @DisplayName("회원가입 테스트")
     public void joinTest() {
-        Member member = joinNewMember();
+        Member member = createMember();
         Member joinedMember = memberService.saveMember(member);
 
         assertEquals(member.getEmail(), joinedMember.getEmail());
@@ -57,8 +57,8 @@ public class MemberServiceTest {
     @Test
     @DisplayName("중복 가입 테스트")
     public void DuplicateJoinTest() {
-        Member member1 = joinNewMember();
-        Member member2 = joinNewMember();
+        Member member1 = createMember();
+        Member member2 = createMember();
         memberService.saveMember(member1);
 
         Throwable e = assertThrows(IllegalStateException.class, () -> {

@@ -1,10 +1,104 @@
 <!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Title</title>
-</head>
-<body>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layouts/layout}">
 
-</body>
+<head>
+    <meta name="_csrf" th:content="${_csrf.token}"/>
+    <meta name="_csrf_header" th:content="${_csrf.headerName}"/>
+</head>
+
+<th:block layout:fragment="script">
+    <script th:inline="javascript" th:src="@{/js/productDtl.js}"></script>
+</th:block>
+<th:block layout:fragment="css">
+    <link th:href="@{/css/productDtl.css}" rel="stylesheet">
+</th:block>
+
+<div layout:fragment="content" style="margin-left: 25%; margin-right: 25%">
+    <input type="hidden" id="productCode" th:value="${productCode}">
+
+    <div class="d-flex">
+        <div class="repImgDiv">
+            <img th:src="${product.productImgDtos[0].imgUrl}" class="rounded repImg" th:alt="${product.productName}">
+        </div>
+        <div class="wd50">
+            <span th:switch="${product.category.toString()}" class="badge badge-success mgb-15">
+                <span th:case="HOUSEHOLD">가정</span>
+                <span th:case="HEALTH_HOBBY">건강/취미</span>
+                <span th:case="ECONOMICS_BUSINESS">경제/경영</span>
+                <span th:case="DICTIONARY">사전</span>
+                <span th:case="UNIVERSITY_TEXTBOOK">대학교재</span>
+                <span th:case="COMIC">만화</span>
+                <span th:case="SOCIAL_POLITICS">사회/정치</span>
+                <span th:case="NOVEL_POEM">소설/시</span>
+                <span th:case="CHILD">어린이</span>
+                <span th:case="ESSAY">에세이</span>
+                <span th:case="TRAVEL">여행</span>
+                <span th:case="HISTORY">역사</span>
+                <span th:case="ART">예술</span>
+                <span th:case="HUMANITIES">인문</span>
+                <span th:case="SELF_IMPROVEMENT">자기계발</span>
+                <span th:case="NATURAL_SCIENCE">자연과학</span>
+                <span th:case="MAGAZINE">잡지</span>
+                <span th:case="RELIGION">종교</span>
+                <span th:case="TEENAGER">청소년</span>
+                <span th:case="IT_MOBILE">IT/모바일</span>
+            </span>
+
+            <span th:if="${product.productSellStatus == T(com.mildous.bookstore.constant.ProductSellStatus).SELL}" class="badge badge-primary mgb-15">
+                판매중
+            </span>
+            <span th:if="${product.productSellStatus == T(com.mildous.bookstore.constant.ProductSellStatus).SOLD_OUT}" class="badge badge-primary mgb-15">
+                품절
+            </span>
+            <div class="h4" th:text="${product.productName}"></div>
+            <div class="h6" th:text="${product.productSubName}"></div>
+            <br>
+            <div class="h6">
+                <span th:text="${product.author} + '저'"></span> |
+                <span th:text="${product.publisher}"></span>
+            </div>
+            <hr class="my-4">
+
+            <div class="text-right">
+                <div class="h4 text-danger text-left">
+                    <input type="hidden" th:value="${product.productPrice}" id="productPrice" name="productPrice">
+                    <span th:text="${product.productPrice}"></span>원
+                </div>
+                <div class="input-group w-50">
+                    <div class="input-group-prepend">
+                        <span class="input-group-text">수량</span>
+                    </div>
+                    <input type="number" name="count" id="count" class="form-control" value="1" min="1">
+                </div>
+            </div>
+            <hr class="my-4">
+
+            <div class="text-right mgt-50">
+                <h5>결제 금액</h5>
+                <h3 name="totalPrice" id="totalPrice" class="font-weight-bold"></h3>
+            </div>
+            <div th:if="${product.productSellStatus == T(com.mildous.bookstore.constant.ProductSellStatus).SELL}" class="text-right">
+                <button type="button" class="btn btn-light border border-primary btn-lg" onclick="addCart()">장바구니 담기</button>
+                <button type="button" class="btn btn-primary btn-lg" onclick="order()">주문하기</button>
+            </div>
+            <div th:unless="${product.productSellStatus == T(com.mildous.bookstore.constant.ProductSellStatus).SELL}" class="text-right">
+                 <button type="button" class="btn btn-danger btn-lg">품절</button>
+            </div>
+        </div>
+    </div>
+    <div class="jumbotron jumbotron-fluid mgt-30">
+        <div class="container">
+            <h4 class="display-5">상품 상세 설명</h4>
+            <hr class="my-4">
+            <p class="lead" th:utext="${product.productDetail}"></p>
+        </div>
+    </div>
+
+    <div th:each="productImg : ${product.productImgDtos}" class="text-center">
+        <img th:if="${not #strings.isEmpty(productImg.imgUrl)}" th:src="${productImg.imgUrl}" class="rounded mgb-15" width="100%">
+    </div>
+
+</div>
 </html>
